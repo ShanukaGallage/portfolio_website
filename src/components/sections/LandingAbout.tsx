@@ -23,7 +23,7 @@ export default function LandingAbout() {
     target: ref,
     offset: ["start end", "end start"]
   });
-  const noisyY = useTransform(noisyScroll, [0, 1], prefersReducedMotion ? ["0%", "0%"] : ["-15%", "20%"]);
+  const noisyY = useTransform(noisyScroll, [0, 1], prefersReducedMotion ? ["0%", "0%"] : ["-35%", "35%"]);
 
   const customBio = [
     "Hello, I'm Shanuka Gallage, an IT undergraduate at the University of Kelaniya, Sri Lanka. While my journey involves software development, my true passion lies in the infrastructure that brings code to life: DevOps, Site Reliability, and the Cloud.",
@@ -56,7 +56,7 @@ export default function LandingAbout() {
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="lg:col-span-8 relative aspect-[26/12] w-full overflow-hidden"
+            className="lg:col-span-8 relative aspect-[26/15] w-full overflow-hidden"
           >
             <motion.div style={{ y: noisyY }} className="absolute inset-x-0 w-full h-[120%] -top-[25%]">
               <Image
