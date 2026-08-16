@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Terminal } from "lucide-react";
+import { MagneticButton } from "@/components/MagneticButton";
 import MobileMenu from "./MobileMenu";
 
 const navLinks = [
@@ -40,28 +42,33 @@ export default function Navbar() {
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
                 return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="relative px-3 py-2 text-sm font-medium transition-all duration-200 group flex items-center gap-2"
-                  >
-                    <span className={`font-mono ${isActive ? "text-terminal-accent text-glow" : "text-terminal-muted hover:text-terminal-accent"} transition-colors duration-200`}>
-                      {link.label}
-                    </span>
-                    {isActive && (
-                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-terminal-accent shadow-[0_0_8px_rgba(0,255,136,0.6)]" />
-                    )}
-                  </Link>
+                  <MagneticButton key={link.href} padding="p-2 -m-2">
+                    <Link
+                      href={link.href}
+                      className="relative px-3 py-2 text-sm font-medium transition-all duration-200 group flex items-center gap-2"
+                    >
+                      <span className={`font-mono ${isActive ? "text-terminal-accent text-glow" : "text-terminal-muted hover:text-terminal-accent"} transition-colors duration-200`}>
+                        {link.label}
+                      </span>
+                      {isActive && (
+                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-terminal-accent shadow-[0_0_8px_rgba(0,255,136,0.6)]" />
+                      )}
+                    </Link>
+                  </MagneticButton>
                 );
               })}
             </div>
 
-            {/* Status + Mobile Toggle */}
+            {/* Status + Terminal Toggle + Mobile Toggle */}
             <div className="flex items-center gap-4">
-              <span className="hidden lg:flex items-center gap-2 text-terminal-accent text-xs font-mono">
-                <span className="w-2 h-2 rounded-full bg-terminal-accent animate-glow-pulse" />
-                online
-              </span>
+              <button
+                onClick={() => window.dispatchEvent(new Event('open-terminal'))}
+                className="p-2 rounded-md text-terminal-muted hover:text-terminal-accent focus:outline-none focus:ring-2 focus:ring-terminal-accent transition-colors"
+                aria-label="Open Terminal"
+                title="Open Terminal (Ctrl + `)"
+              >
+                <Terminal className="w-5 h-5" />
+              </button>
 
               {/* Mobile hamburger */}
               <button

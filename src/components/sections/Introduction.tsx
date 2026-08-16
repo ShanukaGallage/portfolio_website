@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import ScrambleText from "@/components/ScrambleText";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -55,9 +56,9 @@ export default function Introduction() {
             className="lg:col-span-7"
           >
             <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold text-white leading-[0.9] tracking-tighter font-sans uppercase">
-              DEVOPS ENGINEER<br />
-              AND CLOUD<br />
-              ARCHITECT.
+              <ScrambleText text="DEVOPS ENGINEER" /><br />
+              <ScrambleText text="AND CLOUD" /><br />
+              <ScrambleText text="ARCHITECT." />
             </h2>
           </motion.div>
 

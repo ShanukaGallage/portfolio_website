@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useMotionTemplate } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { TerminalWindow, TypedLine, OutputLine } from "@/components/Terminal";
+import ScrambleText from "@/components/ScrambleText";
+import { MagneticButton } from "@/components/MagneticButton";
 import { profile } from "@/data/profile";
 
 /* ── Particle Canvas ── */
@@ -136,15 +138,72 @@ function ParticleBackground() {
   );
 }
 
+/* ── Grain noise SVG data-URI ── */
+const GRAIN_SVG = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E")`;
+
+/* ── Smoke Wisps ── */
+function SmokeBackground({ mouseX, mouseY }: { mouseX: ReturnType<typeof useMotionValue<number>>; mouseY: ReturnType<typeof useMotionValue<number>> }) {
+  // 5 wisps with different spring configs → they separate and reform like smoke
+  // Wisp 1: fast, close to cursor (core glow)
+  const w1x = useSpring(mouseX, { stiffness: 45, damping: 18 });
+  const w1y = useSpring(mouseY, { stiffness: 45, damping: 18 });
+  // Wisp 2: medium, drifts left-up
+  const w2x = useSpring(mouseX, { stiffness: 25, damping: 22 });
+  const w2y = useSpring(mouseY, { stiffness: 20, damping: 25 });
+  // Wisp 3: slow, drifts right
+  const w3x = useSpring(mouseX, { stiffness: 15, damping: 28 });
+  const w3y = useSpring(mouseY, { stiffness: 18, damping: 24 });
+  // Wisp 4: very slow, drifts down-left (lingering tail)
+  const w4x = useSpring(mouseX, { stiffness: 10, damping: 30 });
+  const w4y = useSpring(mouseY, { stiffness: 12, damping: 28 });
+  // Wisp 5: slowest, ambient haze
+  const w5x = useSpring(mouseX, { stiffness: 6, damping: 35 });
+  const w5y = useSpring(mouseY, { stiffness: 8, damping: 32 });
+
+  // Compose all 5 wisps into a single layered background
+  const smokeBg = useMotionTemplate`
+    radial-gradient(ellipse 600px 400px at ${w1x}% ${w1y}%, rgba(34,255,136,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 800px 500px at ${w2x}% ${w2y}%, rgba(20,200,80,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 1000px 600px at ${w3x}% ${w3y}%, rgba(13,77,38,0.2) 0%, transparent 50%),
+    radial-gradient(ellipse 900px 700px at ${w4x}% ${w4y}%, rgba(10,60,30,0.15) 0%, transparent 55%),
+    radial-gradient(ellipse 1200px 800px at ${w5x}% ${w5y}%, rgba(8,50,25,0.12) 0%, transparent 50%)
+  `;
+
+  return (
+    <motion.div
+      className="absolute inset-0"
+      style={{ background: smokeBg, zIndex: 0 }}
+      aria-hidden
+    />
+  );
+}
+
 /* ── Hero Section ── */
 export default function Hero() {
   const [step, setStep] = useState(0);
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
+  const heroRef = useRef<HTMLElement>(null);
+
+  // Normalized cursor position (0–100%) for gradient center
+  const mouseX = useMotionValue(50);
+  const mouseY = useMotionValue(50);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const handleHeroMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = heroRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    mouseX.set(((e.clientX - rect.left) / rect.width) * 100);
+    mouseY.set(((e.clientY - rect.top) / rect.height) * 100);
+  };
+
+  const handleHeroMouseLeave = () => {
+    mouseX.set(50);
+    mouseY.set(50);
+  };
 
   const handleScrollTo = (id: string) => {
     router.push(`/${id}`);
@@ -161,18 +220,31 @@ export default function Hero() {
 
   return (
     <section
+      ref={heroRef}
       id="hero"
       className="relative min-h-screen flex items-center overflow-hidden"
+      style={{ backgroundColor: "#0a0a0a" }}
+      onMouseMove={handleHeroMouseMove}
+      onMouseLeave={handleHeroMouseLeave}
     >
       {/* ── Background Layers ── */}
-      {/* Gradient Orbs */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="hero-gradient-orb hero-gradient-orb-1" />
-        <div className="hero-gradient-orb hero-gradient-orb-2" />
-        <div className="hero-gradient-orb hero-gradient-orb-3" />
-      </div>
+      {/* 1. Smoke wisps (base layer) */}
+      {mounted && <SmokeBackground mouseX={mouseX} mouseY={mouseY} />}
 
-      {/* Grid overlay */}
+      {/* 2. Grain/noise texture overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: GRAIN_SVG,
+          backgroundRepeat: "repeat",
+          mixBlendMode: "overlay",
+          opacity: 0.12,
+          zIndex: 1,
+        }}
+        aria-hidden
+      />
+
+      {/* 3. Grid overlay */}
       <div
         className="absolute inset-0 opacity-[0.04]"
         style={{
@@ -181,10 +253,11 @@ export default function Hero() {
             linear-gradient(90deg, rgba(0,255,65,0.3) 1px, transparent 1px)
           `,
           backgroundSize: "50px 50px",
+          zIndex: 2,
         }}
       />
 
-      {/* Particle Canvas */}
+      {/* 4. Particle Canvas */}
       {mounted && <ParticleBackground />}
 
       {/* ── Content ── */}
@@ -213,23 +286,21 @@ export default function Hero() {
               className="space-y-3"
             >
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight">
-                <span className="text-terminal-text">Hi, I&apos;m</span>
+                <ScrambleText text="Hi, I'm" className="text-terminal-text" />
                 <br />
-                <span className="text-terminal-accent text-glow">
-                  {profile.name.split(" ")[0]}
-                </span>
-                <span className="text-terminal-text">
-                  {" "}{profile.name.split(" ").slice(1).join(" ")}
-                </span>
+                <ScrambleText text={profile.name.split(" ")[0]} className="text-terminal-accent text-glow" />
+                <ScrambleText text={" " + profile.name.split(" ").slice(1).join(" ")} className="text-terminal-text" />
                 <motion.span
                   animate={{ opacity: [1, 0, 1] }}
                   transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
                   className="inline-block ml-2 w-3 md:w-5 h-[0.9em] bg-terminal-accent relative top-[0.1em]"
                 />
               </h1>
-              <p className="text-lg md:text-xl text-terminal-muted font-light max-w-lg">
-                {profile.title}
-              </p>
+              <ScrambleText
+                text={profile.title}
+                as="p"
+                className="text-lg md:text-xl text-terminal-muted font-light max-w-lg"
+              />
             </motion.div>
 
             {/* Short bio */}
@@ -249,18 +320,22 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 0.6 }}
               className="flex flex-wrap gap-4"
             >
-              <button
-                onClick={() => handleScrollTo("projects")}
-                className="hero-cta hero-cta-primary"
-              >
-                <span>$</span> ls projects/
-              </button>
-              <button
-                onClick={() => handleScrollTo("contact")}
-                className="hero-cta hero-cta-secondary"
-              >
-                <span>$</span> contact --help
-              </button>
+              <MagneticButton>
+                <button
+                  onClick={() => handleScrollTo("projects")}
+                  className="hero-cta hero-cta-primary"
+                >
+                  <span>$</span> ls projects/
+                </button>
+              </MagneticButton>
+              <MagneticButton>
+                <button
+                  onClick={() => handleScrollTo("contact")}
+                  className="hero-cta hero-cta-secondary"
+                >
+                  <span>$</span> contact --help
+                </button>
+              </MagneticButton>
             </motion.div>
 
             {/* Tech badges */}

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { TypedLine, OutputLine } from "@/components/Terminal";
+import ScrambleText from "@/components/ScrambleText";
 import { roadmapItems } from "@/data/projects";
 
 export default function Roadmap() {
@@ -35,8 +36,8 @@ export default function Roadmap() {
       {step >= 1 && (
         <OutputLine delay={0.1}>
           <div className="mb-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-terminal-text">
-              <span className="text-terminal-accent">&gt;</span> Learning Roadmap
+            <h2 className="text-2xl md:text-3xl font-bold text-terminal-text flex items-center gap-2">
+              <span className="text-terminal-accent">&gt;</span> <ScrambleText text="Learning Roadmap" />
             </h2>
           </div>
 

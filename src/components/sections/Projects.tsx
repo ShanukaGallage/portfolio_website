@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { TypedLine, OutputLine } from "@/components/Terminal";
+import ScrambleText from "@/components/ScrambleText";
 import { projects, Project } from "@/data/projects";
 import { ChevronLeft, ChevronRight, X, ExternalLink, GitBranch } from "lucide-react";
 
@@ -63,8 +64,8 @@ export default function Projects() {
       {step >= 1 && (
         <OutputLine delay={0.1}>
           <div className="mb-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-terminal-text">
-              <span className="text-terminal-accent">&gt;</span> Projects
+            <h2 className="text-2xl md:text-3xl font-bold text-terminal-text flex items-center gap-2">
+              <span className="text-terminal-accent">&gt;</span> <ScrambleText text="Projects" />
             </h2>
           </div>
 

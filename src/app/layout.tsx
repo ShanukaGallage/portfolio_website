@@ -39,8 +39,9 @@ export const metadata: Metadata = {
 
 import Navbar from "@/components/layout/Navbar";
 import PageTransition from "@/components/layout/PageTransition";
-
-import BackgroundAudio from "@/components/BackgroundAudio";
+import BootWrapper from "@/components/BootWrapper";
+import TerminalOverlay from "@/components/TerminalOverlay";
+import StatusBar from "@/components/StatusBar";
 
 export default function RootLayout({
   children,
@@ -50,15 +51,18 @@ export default function RootLayout({
   return (
     <html lang="en" className={jetbrainsMono.variable}>
       <body className="scanline-overlay">
-        <BackgroundAudio />
-        <Navbar />
-        <div className="min-h-screen flex flex-col">
-          <div className="flex-1 w-full pt-16 overflow-x-hidden">
-            <PageTransition>
-              {children}
-            </PageTransition>
+        <BootWrapper>
+          <TerminalOverlay />
+          <Navbar />
+          <div className="min-h-screen flex flex-col">
+            <div className="flex-1 w-full pt-16 pb-8 overflow-x-hidden">
+              <PageTransition>
+                {children}
+              </PageTransition>
+            </div>
           </div>
-        </div>
+          <StatusBar />
+        </BootWrapper>
       </body>
     </html>
   );

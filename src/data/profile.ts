@@ -20,7 +20,7 @@ export interface Profile {
 export const profile: Profile = {
   name: "Shanuka Gallage",
   username: "shanuka",
-  title: "Aspiring DevOps / SRE / Cloud Engineer",
+  title: "Aspiring DevOps Engineer",
   bio: [
     "Passionate about building reliable, scalable infrastructure and automating everything in between.",
     "Currently deep-diving into Kubernetes orchestration, Infrastructure as Code with Terraform, and designing CI/CD pipelines that actually work.",
@@ -34,11 +34,11 @@ export const profile: Profile = {
     twitter: "https://twitter.com/shanuka_dev",
   },
   stats: [
+    { label: "EDUCATION", value: "University of Kelaniya - Faculty of Science" },
+    { label: "DEGREE", value: "BSc (Hons) Information Technology" },
+    { label: "INTERESTS", value: "DevOps, SRE, Cloud, Automation, Linux" },
     { label: "UPTIME", value: "22 years" },
     { label: "LOCATION", value: "Sri Lanka 🇱🇰" },
-    { label: "STATUS", value: "Learning & Building" },
-    { label: "KERNEL", value: "Ubuntu / Arch" },
-    { label: "SHELL", value: "zsh + oh-my-zsh" },
-    { label: "EDITOR", value: "Neovim / VS Code" },
+    { label: "STATUS", value: "Learning & Building" }
   ],
 };

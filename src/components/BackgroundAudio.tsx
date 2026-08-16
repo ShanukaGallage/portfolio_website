@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { Volume2, VolumeX, SkipForward, SkipBack, Play, Pause } from "lucide-react";
 
 // Define your playlist here. Ensure these files exist in the public/ folder.
 const PLAYLIST = [
@@ -12,9 +13,18 @@ const PLAYLIST = [
 export default function BackgroundAudio() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [trackIndex, setTrackIndex] = useState(0);
+  const [isAttentionPulse, setIsAttentionPulse] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const currentTrack = PLAYLIST[trackIndex];
+
+  // Stop attention pulse after 10 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsAttentionPulse(false);
+    }, 10000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Auto-play the new track when trackIndex changes (if already playing)
   useEffect(() => {
@@ -43,11 +53,17 @@ export default function BackgroundAudio() {
     }
   };
 
-  const skipTrack = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const skipTrack = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     setTrackIndex((prev) => (prev + 1) % PLAYLIST.length);
-    // If it was paused and user skips, maybe we want to start playing? 
-    // Yes, skipping usually implies intent to listen.
+    if (!isPlaying) {
+      setIsPlaying(true);
+    }
+  };
+
+  const prevTrack = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setTrackIndex((prev) => (prev === 0 ? PLAYLIST.length - 1 : prev - 1));
     if (!isPlaying) {
       setIsPlaying(true);
     }
@@ -67,35 +83,57 @@ export default function BackgroundAudio() {
         preload="none"
       />
 
-      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2">
-        {/* Play/Pause Button */}
-        <button
-          onClick={togglePlay}
-          className={`px-3 py-2 bg-terminal-surface border transition-all duration-300 font-mono text-xs font-bold box-glow-hover flex items-center gap-2 ${isPlaying
-            ? "border-terminal-accent/50 text-terminal-accent"
-            : "border-terminal-border text-terminal-muted hover:text-terminal-accent hover:border-terminal-accent"
-            }`}
-          aria-label="Toggle background music"
-          title={isPlaying ? "Pause Music" : "Play Music"}
+      <div className="flex items-center h-full gap-2 px-2">
+        {/* Track Info (Click to toggle play/pause) */}
+        <button 
+          onClick={() => {
+            setIsAttentionPulse(false);
+            togglePlay();
+          }}
+          className="flex items-center gap-1.5 max-w-[100px] sm:max-w-[150px] overflow-hidden whitespace-nowrap text-ellipsis border-r border-terminal-accent/20 pr-2 mr-1 hover:opacity-80 transition-opacity focus:outline-none"
+          title={isPlaying ? "Pause" : "Play"}
         >
-          <span className={isPlaying ? "animate-pulse" : ""}>{isPlaying ? "[♪]" : "[✕]"}</span>
-          <span className="hidden sm:inline">
-            {isPlaying ? `${currentTrack.title}` : "NFS_MW SoundTracks: PAUSED"}
-          </span>
-          <span className="sm:hidden">
-            {isPlaying ? "BGM" : "PAUSED"}
+          <span className={`flex items-center gap-1.5 text-xs truncate transition-colors ${
+            isPlaying ? "text-terminal-accent" : 
+            isAttentionPulse ? "text-terminal-accent animate-pulse" : "text-terminal-muted hover:text-terminal-accent"
+          }`}>
+            {isPlaying ? <Volume2 className="w-3 h-3 shrink-0" /> : <VolumeX className="w-3 h-3 shrink-0" />}
+            <span className="truncate">{currentTrack.title}</span>
           </span>
         </button>
 
-        {/* Skip Button */}
-        <button
-          onClick={skipTrack}
-          className="px-3 py-2 bg-terminal-surface border border-terminal-border text-terminal-muted hover:text-terminal-accent hover:border-terminal-accent transition-all duration-300 font-mono text-xs font-bold box-glow-hover flex items-center justify-center"
-          aria-label="Next track"
-          title="Next Track"
-        >
-          [»]
-        </button>
+        {/* Media Controls */}
+        <div className="flex items-center gap-1">
+          <button
+            onClick={prevTrack}
+            className="p-1 text-terminal-muted hover:text-terminal-accent transition-colors focus:outline-none"
+            title="Previous Track"
+          >
+            <SkipBack className="w-3.5 h-3.5" />
+          </button>
+          
+          <button
+            onClick={() => {
+              setIsAttentionPulse(false);
+              togglePlay();
+            }}
+            className={`p-1 transition-colors focus:outline-none ${
+              isPlaying ? "text-terminal-accent" : 
+              isAttentionPulse ? "text-terminal-accent animate-pulse" : "text-terminal-muted hover:text-terminal-accent"
+            }`}
+            title={isPlaying ? "Pause" : "Play"}
+          >
+            {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+          </button>
+          
+          <button
+            onClick={skipTrack}
+            className="p-1 text-terminal-muted hover:text-terminal-accent transition-colors focus:outline-none"
+            title="Next Track"
+          >
+            <SkipForward className="w-3.5 h-3.5" />
+          </button>
+        </div>
       </div>
     </>
   );

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { TerminalWindow, TypedLine, OutputLine } from "@/components/Terminal";
+import ScrambleText from "@/components/ScrambleText";
 import { profile } from "@/data/profile";
 
 export default function About() {
@@ -24,8 +25,8 @@ export default function About() {
       {step >= 1 && (
         <OutputLine delay={0.1}>
           <div className="mb-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-terminal-text">
-              <span className="text-terminal-accent">&gt;</span> About Me
+            <h2 className="text-2xl md:text-3xl font-bold text-terminal-text flex items-center gap-2">
+              <span className="text-terminal-accent">&gt;</span> <ScrambleText text="About Me" />
             </h2>
           </div>
 
