@@ -133,8 +133,8 @@ export const commands: Record<string, Command> = {
         if (project.liveUrl) {
            openUrl(project.liveUrl);
            return `Opening live demo for ${project.title}...`;
-        } else if (project.repoUrl) {
-           openUrl(project.repoUrl);
+        } else if (project.githubRepo) {
+           openUrl(`https://github.com/${project.githubRepo.owner}/${project.githubRepo.name}`);
            return `Opening repository for ${project.title}...`;
         } else {
            return (

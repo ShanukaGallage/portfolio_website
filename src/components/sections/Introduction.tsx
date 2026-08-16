@@ -80,12 +80,21 @@ export default function Introduction() {
               >
                 Let&apos;s Collaborate
               </Link>
-              <Link
-                href="/contact"
+              <a
+                href="/Shanuka_Gallage_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="px-8 py-3 bg-black/60 border border-transparent backdrop-blur-md text-white text-xs font-sans tracking-[0.2em] uppercase hover:bg-white hover:text-black hover:border-white transition-all duration-300"
               >
-                Hire Me
-              </Link>
+                View Resume
+              </a>
+              <a
+                href="/Shanuka_Gallage_Resume.pdf"
+                download
+                className="px-8 py-3 bg-black/60 border border-transparent backdrop-blur-md text-white text-xs font-sans tracking-[0.2em] uppercase hover:bg-white hover:text-black hover:border-white transition-all duration-300"
+              >
+                Download Resume
+              </a>
             </div>
           </motion.div>
 

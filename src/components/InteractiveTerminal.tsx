@@ -239,7 +239,7 @@ export default function InteractiveTerminal() {
                   })
                 ) : (
                   <div className="px-6 py-4 text-terminal-muted italic">
-                    No commands matching "{input}"
+                    No commands matching &quot;{input}&quot;
                   </div>
                 )}
               </div>

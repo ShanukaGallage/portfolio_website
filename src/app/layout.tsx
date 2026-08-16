@@ -42,6 +42,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import BootWrapper from "@/components/BootWrapper";
 import TerminalOverlay from "@/components/TerminalOverlay";
 import StatusBar from "@/components/StatusBar";
+import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 
 export default function RootLayout({
   children,
@@ -51,7 +52,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={jetbrainsMono.variable}>
       <body className="scanline-overlay">
-        <BootWrapper>
+        <SmoothScrollProvider>
+          <BootWrapper>
           <TerminalOverlay />
           <Navbar />
           <div className="min-h-screen flex flex-col">
@@ -63,6 +65,7 @@ export default function RootLayout({
           </div>
           <StatusBar />
         </BootWrapper>
+        </SmoothScrollProvider>
       </body>
     </html>
   );

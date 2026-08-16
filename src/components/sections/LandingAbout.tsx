@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, useInView, useScroll, useTransform, useReducedMotion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import ScrambleText from "@/components/ScrambleText";
@@ -26,7 +26,7 @@ export default function LandingAbout() {
     setMounted(true);
   }, []);
 
-  const trySpawn = (clientX: number, clientY: number) => {
+  const trySpawn = useCallback((clientX: number, clientY: number) => {
     if (!mounted) return;
 
     const pageX = clientX + window.scrollX;
@@ -64,7 +64,7 @@ export default function LandingAbout() {
         setTrail((prev) => prev.filter((item) => item.id !== id));
       }, 800);
     }
-  };
+  }, [mounted]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     lastMouse.current = { clientX: e.clientX, clientY: e.clientY };

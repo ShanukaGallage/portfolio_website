@@ -28,7 +28,7 @@ function detectDevice(): { prefix: string; text: string }[] {
   const cores = navigator.hardwareConcurrency || 0;
 
   // RAM (Chrome/Edge only — returns GB, may be undefined)
-  const ram = (navigator as Record<string, unknown>).deviceMemory as number | undefined;
+  const ram = (navigator as unknown as Record<string, unknown>).deviceMemory as number | undefined;
 
   // GPU via WebGL
   let gpu = "Unknown GPU";

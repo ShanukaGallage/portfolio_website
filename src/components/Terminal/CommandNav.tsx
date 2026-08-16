@@ -12,10 +12,9 @@ interface NavCommand {
 
 const commands: NavCommand[] = [
   { command: "cd ~", target: "/", label: "Home" },
-  { command: "whoami", target: "/about", label: "About Me" },
+  { command: "history", target: "/experience", label: "Experience" },
   { command: "ls projects/", target: "/projects", label: "Projects" },
   { command: "cat skills.md", target: "/skills", label: "Skills" },
-  { command: "cat roadmap.md", target: "/roadmap", label: "Roadmap" },
   { command: "contact --help", target: "/contact", label: "Contact" },
 ];
 

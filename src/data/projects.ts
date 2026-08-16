@@ -3,128 +3,128 @@ export interface Project {
   date: string;
   title: string;
   highlight: string;
+  role: string;
+  year: string;
   description: string;
+  stats: { label: string; value: string }[];
+  highlights: string[];
   features?: string[];
   images: string[];
   tags: string[];
-  repoUrl?: string;
-  liveUrl?: string;
+  liveUrl: string | null;
+  githubRepo: { owner: string; name: string } | null;
   status: "merged" | "in-progress" | "planned";
 }
 
 export const projects: Project[] = [
   {
-    hash: "a3f8b2c",
-    date: "2026-07-20",
-    title: "Terraform AWS Multi-Tier Infrastructure",
-    highlight: "Production-grade AWS environment provisioned via Terraform.",
-    description:
-      "Provisioned a production-grade AWS environment with complete network isolation and auto-scaling capabilities.",
+    hash: "l5c7m2s",
+    date: "2026-08-16",
+    title: "Lanka Courier System",
+    highlight: "Java Swing-based enterprise courier management desktop application.",
+    role: "Java Developer",
+    year: "2026",
+    description: "A comprehensive Java Swing–based courier management system designed to handle parcel operations, shipment tracking, branch coordination, and role-based access control. Built with a clean, layered architecture separating UI, Service, and DAO layers.",
+    stats: [
+      { label: "Language", value: "Java 17" },
+      { label: "UI", value: "Java Swing" },
+      { label: "Database", value: "MySQL" },
+      { label: "Build", value: "Maven" }
+    ],
+    highlights: [
+      "Layered architecture (UI, Service, DAO) for clean separation of concerns.",
+      "End-to-end shipment lifecycle tracking (Received to Delivered).",
+      "Secure authentication using BCrypt password hashing.",
+      "PDF shipping label generation with barcode/QR code support."
+    ],
     features: [
-      "VPC with public/private subnets, NAT Gateways, and Application Load Balancers.",
-      "EC2 Auto Scaling Groups for high availability and fault tolerance.",
-      "RDS PostgreSQL and S3 buckets for secure, persistent storage.",
-      "Remote state management via S3 + DynamoDB locking.",
-      "Modularized Terraform configurations for dev, staging, and prod environments."
+      "Parcel registration and automatic shipping cost calculation",
+      "Multi-branch support across districts with centralized MySQL",
+      "Role-based access control (Admin, Clerk, Staff/Driver)",
+      "Timestamped shipment tracking history with branch association",
+      "Cash on Delivery (COD) payment handling"
     ],
     images: [
-      "https://placehold.co/800x500/0d1117/00ff41/png?text=AWS+Architecture+Diagram",
-      "https://placehold.co/800x500/0d1117/00ff41/png?text=Terraform+Apply+Output",
-      "https://placehold.co/800x500/0d1117/00ff41/png?text=AWS+Console+Resources"
+      "https://raw.githubusercontent.com/ShanukaGallage/Lanka_Courier_Management_System/main/screenshots/Dashboard.png",
+      "https://raw.githubusercontent.com/ShanukaGallage/Lanka_Courier_Management_System/main/screenshots/Parcel%20Management.png"
     ],
-    tags: ["terraform", "aws", "vpc", "rds", "s3"],
-    repoUrl: "https://github.com/ShanukaGallage/terraform-aws-infra",
+    tags: ["java", "swing", "mysql", "jdbc", "maven", "oop"],
+    liveUrl: null,
+    githubRepo: { owner: "ShanukaGallage", name: "Lanka_Courier_Management_System" },
     status: "merged",
   },
   {
-    hash: "e7d1f4a",
-    date: "2026-06-10",
-    title: "GitHub Actions CI/CD Pipeline",
-    highlight: "End-to-end automated deployment pipeline for microservices.",
-    description:
-      "End-to-end automated deployment pipeline designed for modern Node.js microservices.",
+    hash: "o1n2i3t",
+    date: "2026-08-16",
+    title: "OnIts",
+    highlight: "Full-stack task and project management platform.",
+    role: "Full Stack Developer",
+    year: "2026",
+    description: "OnIts is a comprehensive full-stack task and project management platform built for teams, featuring real-time collaboration, robust PostgreSQL data modeling via Prisma, and secure HttpOnly cookie-based JWT authentication.",
+    stats: [
+      { label: "Frontend", value: "React/Vite" },
+      { label: "Backend", value: "Node/Express" },
+      { label: "Database", value: "PostgreSQL" },
+      { label: "Realtime", value: "Socket.IO" }
+    ],
+    highlights: [
+      "Real-time task synchronization powered by Socket.IO.",
+      "Secure authentication using HttpOnly JWT cookies.",
+      "Fully containerized local development with Docker Compose.",
+      "Type-safe database interactions leveraging Prisma ORM and Neon."
+    ],
     features: [
-      "Automated linting and unit testing on every Pull Request.",
-      "Docker image build and push to GitHub Container Registry (GHCR).",
-      "Trivy vulnerability scanning to ensure container security.",
-      "Automated deployment to Kubernetes via ArgoCD GitOps sync.",
-      "Matrix builds tested across Node versions 18, 20, and 22."
+      "React SPA built with Vite, TypeScript, and Tailwind CSS",
+      "Express API with structured routing and Prisma ORM",
+      "PostgreSQL database integration hosted on Neon",
+      "Real-time bidirectional event synchronization via Socket.IO",
+      "Centralized, typed Axios client for consistent API interactions"
     ],
     images: [
-      "https://placehold.co/800x500/0d1117/00ff41/png?text=GitHub+Actions+Workflow",
-      "https://placehold.co/800x500/0d1117/00ff41/png?text=Trivy+Scan+Results",
-      "https://placehold.co/800x500/0d1117/00ff41/png?text=ArgoCD+Dashboard"
+      "https://placehold.co/800x500/0d1117/00ff41/png?text=OnIts+Dashboard",
+      "https://placehold.co/800x500/0d1117/00ff41/png?text=Kanban+Board"
     ],
-    tags: ["github-actions", "docker", "argocd", "ci-cd"],
-    repoUrl: "https://github.com/ShanukaGallage/cicd-pipeline",
+    tags: ["react", "typescript", "nodejs", "postgresql", "socket-io", "docker"],
+    liveUrl: "https://www.onits.app",
+    githubRepo: { owner: "ShanukaGallage", name: "onits" },
     status: "merged",
   },
   {
-    hash: "b9c3e6d",
-    date: "2026-05-01",
-    title: "Kubernetes Helm Chart Collection",
-    highlight: "Custom Helm charts for scalable K8s microservice deployments.",
-    description:
-      "A comprehensive collection of custom Helm charts for deploying scalable microservices to Kubernetes clusters.",
+    hash: "h9w2m4x",
+    date: "2026-08-16",
+    title: "Hydro-Habit Web",
+    highlight: "Landing page for a smart hydration coaster.",
+    role: "Frontend Developer",
+    year: "2026",
+    description: "Official landing page for Hydro-Habit, a smart hydration coaster experience focused on BYOV (Bring Your Own Vessel), daily habit tracking, and Family Care notifications.",
+    stats: [
+      { label: "Tech", value: "HTML/CSS/JS" },
+      { label: "Deployment", value: "Azure" },
+      { label: "Type", value: "Static SPA" },
+      { label: "Focus", value: "Conversion" }
+    ],
+    highlights: [
+      "Premium hero section with animated water-particle canvas.",
+      "Family Care storytelling and mock notification flow.",
+      "Daily hydration goal and 28-day dashboard heatmap.",
+      "Deployed via Azure Static Web Apps GitHub Actions."
+    ],
     features: [
-      "Configurable replicas, resource limits, and CPU/Memory requests.",
-      "Horizontal Pod Autoscaling (HPA) integration for dynamic scaling.",
-      "Dynamic ingress rules and TLS configuration for external access.",
-      "Centralized ConfigMap and Secret management.",
-      "Thoroughly tested across AWS EKS and local k3d environments."
+      "Premium hero section with animated water-particle canvas",
+      "BYOV-focused product feature cards",
+      "Family Care storytelling and mock notification flow",
+      "Daily hydration goal and reminder visuals",
+      "28-day dashboard heatmap and animated counters"
     ],
     images: [
-      "https://placehold.co/800x500/0d1117/00ff41/png?text=Helm+Chart+Structure",
-      "https://placehold.co/800x500/0d1117/00ff41/png?text=kubectl+get+pods",
-      "https://placehold.co/800x500/0d1117/00ff41/png?text=EKS+Cluster+View"
+      "https://placehold.co/800x500/0d1117/00ff41/png?text=Hydro-Habit+Hero",
+      "https://placehold.co/800x500/0d1117/00ff41/png?text=Dashboard+Heatmap"
     ],
-    tags: ["kubernetes", "helm", "eks", "k3d"],
-    repoUrl: "https://github.com/ShanukaGallage/helm-charts",
+    tags: ["html", "css", "javascript", "azure", "static-site"],
+    liveUrl: "https://www.hydro-habit.abrdns.com/",
+    githubRepo: { owner: "ShanukaGallage", name: "hydro-habit-web" },
     status: "merged",
-  },
-  {
-    hash: "f2a8d1e",
-    date: "2026-08-01",
-    title: "Prometheus + Grafana Monitoring",
-    highlight: "Full observability stack on Kubernetes with custom dashboards.",
-    description:
-      "Full observability stack deployed on Kubernetes to monitor cluster health and application performance.",
-    features: [
-      "Deployed seamlessly using the kube-prometheus-stack Helm chart.",
-      "Custom Grafana dashboards tailored for SLIs/SLOs and node metrics.",
-      "Alertmanager configured with real-time Slack and PagerDuty integrations.",
-      "ServiceMonitors set up for automated application metric scraping."
-    ],
-    images: [
-      "https://placehold.co/800x500/0d1117/00ff41/png?text=Grafana+Dashboard",
-      "https://placehold.co/800x500/0d1117/00ff41/png?text=Prometheus+Targets",
-      "https://placehold.co/800x500/0d1117/00ff41/png?text=Slack+Alert+Preview"
-    ],
-    tags: ["prometheus", "grafana", "kubernetes", "monitoring"],
-    repoUrl: "https://github.com/ShanukaGallage/monitoring-stack",
-    status: "in-progress",
-  },
-  {
-    hash: "c4b7a9f",
-    date: "2026-09-01",
-    title: "Ansible Configuration Management",
-    highlight: "Automated provisioning and hardening for Ubuntu server fleets.",
-    description:
-      "A suite of Ansible playbooks and roles for automated provisioning, configuration, and hardening of Ubuntu server fleets.",
-    features: [
-      "Automated package management and core user setup.",
-      "Comprehensive SSH hardening and UFW firewall rules configuration.",
-      "Automated Docker engine installation and service configuration.",
-      "Molecule-tested roles to ensure complete idempotency and reliability."
-    ],
-    images: [
-      "https://placehold.co/800x500/0d1117/00ff41/png?text=Ansible+Playbook+Run",
-      "https://placehold.co/800x500/0d1117/00ff41/png?text=Molecule+Test+Suite",
-      "https://placehold.co/800x500/0d1117/00ff41/png?text=Server+Security+Audit"
-    ],
-    tags: ["ansible", "linux", "security", "automation"],
-    status: "planned",
-  },
+  }
 ];
 
 export interface RoadmapItem {

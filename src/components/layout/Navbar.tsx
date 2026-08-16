@@ -9,10 +9,9 @@ import MobileMenu from "./MobileMenu";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
+  { href: "/experience", label: "Experience" },
   { href: "/skills", label: "Skills" },
   { href: "/projects", label: "Projects" },
-  { href: "/roadmap", label: "Roadmap" },
   { href: "/contact", label: "Contact" },
 ];
 
