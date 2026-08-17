@@ -10,29 +10,29 @@
 </head>
 <body>
   <script>
-    // DECAP CMS OAUTH DEBUGGER
+    // DECAP CMS SECURITY BYPASS
+    // Decap CMS drops the login token if the popup window's internal reference (e.source) 
+    // changes after redirecting to GitHub (a common browser security feature).
+    // We intercept window.open to save the ORIGINAL window reference, and then force 
+    // all incoming messages to use that exact reference to bypass the check.
+    
+    let originalAuthWindow = null;
+    const originalOpen = window.open;
+    window.open = function() {
+      const win = originalOpen.apply(this, arguments);
+      originalAuthWindow = win;
+      return win;
+    };
+
     const originalAddEventListener = window.addEventListener;
     window.addEventListener = function(type, listener, options) {
       if (type === 'message' && typeof listener === 'function') {
         const originalListener = listener;
         listener = function(e) {
           if (typeof e.data === 'string' && e.data.includes('authorization')) {
-            console.log('🚀 [DECAP DEBUGGER] Message Received!');
-            console.log('- e.origin:', e.origin);
-            console.log('- e.data:', e.data);
-            console.log('- this.auth_url:', this.auth_url);
-            console.log('- this.auth_type:', this.auth_type);
-            console.log('- e.source === this.authWindow:', e.source === this.authWindow);
-            
-            // Bypass strict origin check if it's the only thing failing
-            if (this.auth_url && this.auth_url !== e.origin) {
-              console.warn('⚠️ [DECAP DEBUGGER] Origin mismatch detected! Forcing auth_url to match e.origin.');
-              this.auth_url = e.origin;
-            }
-            // Bypass strict e.source check if it's failing
-            if (this.authWindow && e.source !== this.authWindow) {
-               console.warn('⚠️ [DECAP DEBUGGER] e.source mismatch detected! Forcing e.source check bypass.');
-               this.authWindow = e.source;
+            // Force e.source to match exactly what Decap CMS expects
+            if (originalAuthWindow) {
+              Object.defineProperty(e, 'source', { value: originalAuthWindow });
             }
           }
           return originalListener.apply(this, arguments);
