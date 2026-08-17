@@ -32,10 +32,13 @@ export async function GET(request: Request) {
     const data = await tokenResponse.json();
     
     if (data.error) {
-      return NextResponse.json({ error: data.error_description || data.error }, { status: 400 });
+      return new NextResponse(`GitHub OAuth Error: ${data.error_description || data.error}`, { status: 400 });
     }
 
     const token = data.access_token;
+    if (!token) {
+      return new NextResponse(`Error: No access_token found in GitHub response. Response was: ${JSON.stringify(data)}`, { status: 400 });
+    }
 
     const html = `
       <!DOCTYPE html>
@@ -44,18 +47,29 @@ export async function GET(request: Request) {
           <title>Authenticating...</title>
         </head>
         <body>
+          <h2>Authentication successful!</h2>
+          <p>Sending token to CMS...</p>
           <script>
             (function() {
-              function receiveMessage() {
-                if (window.opener) {
-                  window.opener.postMessage(
-                    'authorization:github:success:{"token":"${token}","provider":"github"}',
-                    "*"
-                  );
-                }
-                window.close();
+              if (!window.opener) {
+                document.body.innerHTML += '<p style="color:red">Error: window.opener is null. Your browser is blocking the popup from communicating with the CMS.</p>';
+                return;
               }
-              receiveMessage();
+              
+              const message = 'authorization:github:success:{"token":"${token}","provider":"github"}';
+              
+              try {
+                // Send to all possible origins just in case of mismatch
+                window.opener.postMessage(message, "https://shanukagallage.me");
+                window.opener.postMessage(message, "https://www.shanukagallage.me");
+                window.opener.postMessage(message, "http://localhost:3000");
+                window.opener.postMessage(message, "*");
+                
+                document.body.innerHTML += '<p style="color:green">Message sent to parent window. Closing in 2 seconds...</p>';
+                setTimeout(function() { window.close(); }, 2000);
+              } catch (e) {
+                document.body.innerHTML += '<p style="color:red">Error sending postMessage: ' + e.message + '</p>';
+              }
             })();
           </script>
         </body>
@@ -65,8 +79,8 @@ export async function GET(request: Request) {
     return new NextResponse(html, {
       headers: { 'Content-Type': 'text/html' },
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('OAuth callback error:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return new NextResponse(`Internal Server Error: ${error.message}`, { status: 500 });
   }
 }
