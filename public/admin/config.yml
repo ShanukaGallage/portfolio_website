@@ -2,7 +2,7 @@ backend:
   name: github
   repo: ShanukaGallage/portfolio_website
   branch: main
-  base_url: https://shanukagallage.me
+  base_url: https://www.shanukagallage.me
   auth_endpoint: api/auth
 
 media_folder: "public/images"
