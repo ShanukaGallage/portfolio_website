@@ -9,38 +9,7 @@
   <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url">
 </head>
 <body>
-  <script>
-    // DECAP CMS SECURITY BYPASS
-    // Decap CMS drops the login token if the popup window's internal reference (e.source) 
-    // changes after redirecting to GitHub (a common browser security feature).
-    // We intercept window.open to save the ORIGINAL window reference, and then force 
-    // all incoming messages to use that exact reference to bypass the check.
-    
-    let originalAuthWindow = null;
-    const originalOpen = window.open;
-    window.open = function() {
-      const win = originalOpen.apply(this, arguments);
-      originalAuthWindow = win;
-      return win;
-    };
-
-    const originalAddEventListener = window.addEventListener;
-    window.addEventListener = function(type, listener, options) {
-      if (type === 'message' && typeof listener === 'function') {
-        const originalListener = listener;
-        listener = function(e) {
-          if (typeof e.data === 'string' && e.data.includes('authorization')) {
-            // Force e.source to match exactly what Decap CMS expects
-            if (originalAuthWindow) {
-              Object.defineProperty(e, 'source', { value: originalAuthWindow });
-            }
-          }
-          return originalListener.apply(this, arguments);
-        };
-      }
-      return originalAddEventListener.call(window, type, listener, options);
-    };
-  </script>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <!-- Sveltia CMS is a modern, drop-in replacement for Decap CMS -->
+  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
 </body>
 </html>
