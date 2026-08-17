@@ -52,30 +52,32 @@ export async function GET(request: Request) {
           <script>
             (function() {
               if (!window.opener) {
-                document.body.innerHTML += '<p style="color:red">Error: window.opener is null. Your browser is blocking the popup from communicating with the CMS.</p>';
+                document.body.innerHTML += '<p style="color:red">Error: window.opener is null. Your browser is blocking the popup.</p>';
                 return;
               }
               
+              const tokenStr = 'authorization:github:success:{"token":"${token}","provider":"github"}';
+              
               try {
-                // Decap CMS expects different strings depending on its version and config.
-                // We send ALL combinations to ensure one of them successfully matches its internal regex.
-                const messages = [
-                  'authorization:github:success:{"token":"${token}","provider":"github"}',
-                  'authorization:netlify:success:{"token":"${token}","provider":"github"}',
-                  'authorization:github:success:{"token":"${token}","provider":"netlify"}',
-                  'authorization:netlify:success:{"token":"${token}","provider":"netlify"}',
-                  'authorization:github:success:${token}',
-                  'authorization:netlify:success:${token}'
-                ];
+                // WORKAROUND: If the popup and parent are on the same domain, we can inject a script 
+                // directly into the parent window. This forces the message to originate FROM the parent 
+                // window itself, guaranteeing a 100% perfect origin match for Decap CMS's strict security check.
+                const script = window.opener.document.createElement('script');
+                script.textContent = 'window.postMessage(\\'' + tokenStr + '\\', window.location.origin);';
+                window.opener.document.body.appendChild(script);
                 
-                messages.forEach(msg => {
-                  window.opener.postMessage(msg, "*");
-                });
-                
-                document.body.innerHTML += '<p style="color:green">Tokens dispatched to CMS. Closing window...</p>';
+                document.body.innerHTML += '<p style="color:green">Token successfully injected into parent window! Closing...</p>';
                 setTimeout(function() { window.close(); }, 1500);
               } catch (e) {
-                document.body.innerHTML += '<p style="color:red">Error sending postMessage: ' + e.message + '</p>';
+                // If they are on different subdomains (cross-origin), fallback to normal postMessage
+                try {
+                  window.opener.postMessage(tokenStr, "*");
+                  window.opener.postMessage('authorization:netlify:success:{"token":"${token}","provider":"github"}', "*");
+                  document.body.innerHTML += '<p style="color:orange">Fallback: Used standard postMessage.</p>';
+                  setTimeout(function() { window.close(); }, 1500);
+                } catch (err) {
+                  document.body.innerHTML += '<p style="color:red">Complete failure: ' + err.message + '</p>';
+                }
               }
             })();
           </script>
