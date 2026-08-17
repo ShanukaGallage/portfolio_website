@@ -1,3 +1,5 @@
+import raw from '@/content/skills.json';
+
 export interface SkillItem {
   name: string;
   iconPath: string;
@@ -9,69 +11,4 @@ export interface SkillCategory {
   skills: SkillItem[];
 }
 
-export const skillCategories: SkillCategory[] = [
-  {
-    name: "Linux & OS",
-    icon: "",
-    skills: [
-      { name: "Linux", iconPath: "linux/linux-plain" },
-      { name: "Ubuntu", iconPath: "ubuntu/ubuntu-plain" },
-      { name: "Debian", iconPath: "debian/debian-plain" },
-      { name: "Bash", iconPath: "bash/bash-original" },
-    ],
-  },
-  {
-    name: "Containers & Orchestration",
-    icon: "🐳",
-    skills: [
-      { name: "Docker", iconPath: "docker/docker-original" },
-      { name: "Kubernetes", iconPath: "kubernetes/kubernetes-plain" },
-      { name: "Helm", iconPath: "helm/helm-original" },
-    ],
-  },
-  {
-    name: "CI/CD & Automation",
-    icon: "⚙️",
-    skills: [
-      { name: "GitHub Actions", iconPath: "github/github-original" },
-      { name: "GitLab CI", iconPath: "gitlab/gitlab-original" },
-      { name: "Jenkins", iconPath: "jenkins/jenkins-plain" },
-      { name: "ArgoCD", iconPath: "argocd/argocd-plain" },
-    ],
-  },
-  {
-    name: "Infrastructure as Code",
-    icon: "🏗️",
-    skills: [
-      { name: "Terraform", iconPath: "terraform/terraform-plain" },
-      { name: "Ansible", iconPath: "ansible/ansible-plain" },
-    ],
-  },
-  {
-    name: "Cloud Platforms",
-    icon: "☁️",
-    skills: [
-      { name: "AWS", iconPath: "amazonwebservices/amazonwebservices-plain-wordmark" },
-      { name: "Google Cloud", iconPath: "googlecloud/googlecloud-original" },
-      { name: "Azure", iconPath: "azure/azure-original" },
-    ],
-  },
-  {
-    name: "Observability",
-    icon: "📊",
-    skills: [
-      { name: "Prometheus", iconPath: "prometheus/prometheus-original" },
-      { name: "Grafana", iconPath: "grafana/grafana-original" },
-    ],
-  },
-  {
-    name: "Languages",
-    icon: "💻",
-    skills: [
-      { name: "Golang", iconPath: "go/go-plain" },
-      { name: "Java", iconPath: "java/java-plain" },
-      { name: "Python", iconPath: "python/python-plain" },
-      { name: "C++", iconPath: "cplusplus/cplusplus-plain" },
-    ],
-  },
-];
+export const skillCategories: SkillCategory[] = raw.skillCategories as SkillCategory[];

@@ -1,0 +1,156 @@
+{
+  "projects": [
+    {
+      "hash": "l5c7m2s",
+      "date": "2026-08-16",
+      "title": "Lanka Courier System",
+      "highlight": "Java Swing-based enterprise courier management desktop application.",
+      "role": "Java Developer",
+      "year": "2026",
+      "description": "A comprehensive Java Swing–based courier management system designed to handle parcel operations, shipment tracking, branch coordination, and role-based access control. Built with a clean, layered architecture separating UI, Service, and DAO layers.",
+      "stats": [
+        { "label": "Language", "value": "Java 17" },
+        { "label": "UI", "value": "Java Swing" },
+        { "label": "Database", "value": "MySQL" },
+        { "label": "Build", "value": "Maven" }
+      ],
+      "highlights": [
+        "Layered architecture (UI, Service, DAO) for clean separation of concerns.",
+        "End-to-end shipment lifecycle tracking (Received to Delivered).",
+        "Secure authentication using BCrypt password hashing.",
+        "PDF shipping label generation with barcode/QR code support."
+      ],
+      "features": [
+        "Parcel registration and automatic shipping cost calculation",
+        "Multi-branch support across districts with centralized MySQL",
+        "Role-based access control (Admin, Clerk, Staff/Driver)",
+        "Timestamped shipment tracking history with branch association",
+        "Cash on Delivery (COD) payment handling"
+      ],
+      "images": [
+        "https://raw.githubusercontent.com/ShanukaGallage/Lanka_Courier_Management_System/main/screenshots/Dashboard.png",
+        "https://raw.githubusercontent.com/ShanukaGallage/Lanka_Courier_Management_System/main/screenshots/Parcel%20Management.png"
+      ],
+      "tags": ["java", "swing", "mysql", "jdbc", "maven", "oop"],
+      "liveUrl": null,
+      "githubRepo": { "owner": "ShanukaGallage", "name": "Lanka_Courier_Management_System" },
+      "status": "merged"
+    },
+    {
+      "hash": "o1n2i3t",
+      "date": "2026-08-16",
+      "title": "OnIts",
+      "highlight": "Full-stack task and project management platform.",
+      "role": "Full Stack Developer",
+      "year": "2026",
+      "description": "OnIts is a comprehensive full-stack task and project management platform built for teams, featuring real-time collaboration, robust PostgreSQL data modeling via Prisma, and secure HttpOnly cookie-based JWT authentication.",
+      "stats": [
+        { "label": "Frontend", "value": "React/Vite" },
+        { "label": "Backend", "value": "Node/Express" },
+        { "label": "Database", "value": "PostgreSQL" },
+        { "label": "Realtime", "value": "Socket.IO" }
+      ],
+      "highlights": [
+        "Real-time task synchronization powered by Socket.IO.",
+        "Secure authentication using HttpOnly JWT cookies.",
+        "Fully containerized local development with Docker Compose.",
+        "Type-safe database interactions leveraging Prisma ORM and Neon."
+      ],
+      "features": [
+        "React SPA built with Vite, TypeScript, and Tailwind CSS",
+        "Express API with structured routing and Prisma ORM",
+        "PostgreSQL database integration hosted on Neon",
+        "Real-time bidirectional event synchronization via Socket.IO",
+        "Centralized, typed Axios client for consistent API interactions"
+      ],
+      "images": [
+        "https://placehold.co/800x500/0d1117/00ff41/png?text=OnIts+Dashboard",
+        "https://placehold.co/800x500/0d1117/00ff41/png?text=Kanban+Board"
+      ],
+      "tags": ["react", "typescript", "nodejs", "postgresql", "socket-io", "docker"],
+      "liveUrl": "https://www.onits.app",
+      "githubRepo": { "owner": "ShanukaGallage", "name": "onits" },
+      "status": "merged"
+    },
+    {
+      "hash": "h9w2m4x",
+      "date": "2026-08-16",
+      "title": "Hydro-Habit Web",
+      "highlight": "Landing page for a smart hydration coaster.",
+      "role": "Frontend Developer",
+      "year": "2026",
+      "description": "Official landing page for Hydro-Habit, a smart hydration coaster experience focused on BYOV (Bring Your Own Vessel), daily habit tracking, and Family Care notifications.",
+      "stats": [
+        { "label": "Tech", "value": "HTML/CSS/JS" },
+        { "label": "Deployment", "value": "Azure" },
+        { "label": "Type", "value": "Static SPA" },
+        { "label": "Focus", "value": "Conversion" }
+      ],
+      "highlights": [
+        "Premium hero section with animated water-particle canvas.",
+        "Family Care storytelling and mock notification flow.",
+        "Daily hydration goal and 28-day dashboard heatmap.",
+        "Deployed via Azure Static Web Apps GitHub Actions."
+      ],
+      "features": [
+        "Premium hero section with animated water-particle canvas",
+        "BYOV-focused product feature cards",
+        "Family Care storytelling and mock notification flow",
+        "Daily hydration goal and reminder visuals",
+        "28-day dashboard heatmap and animated counters"
+      ],
+      "images": [
+        "https://placehold.co/800x500/0d1117/00ff41/png?text=Hydro-Habit+Hero",
+        "https://placehold.co/800x500/0d1117/00ff41/png?text=Dashboard+Heatmap"
+      ],
+      "tags": ["html", "css", "javascript", "azure", "static-site"],
+      "liveUrl": "https://www.hydro-habit.abrdns.com/",
+      "githubRepo": { "owner": "ShanukaGallage", "name": "hydro-habit-web" },
+      "status": "merged"
+    }
+  ],
+  "roadmapItems": [
+    {
+      "date": "2025 Q4",
+      "title": "Linux Fundamentals & Networking",
+      "description": "Mastered Linux administration, shell scripting, networking fundamentals, and system troubleshooting.",
+      "status": "completed"
+    },
+    {
+      "date": "2026 Q1",
+      "title": "Docker & Containerization",
+      "description": "Learned container fundamentals, multi-stage builds, Docker Compose orchestration, and container security best practices.",
+      "status": "completed"
+    },
+    {
+      "date": "2026 Q2",
+      "title": "CI/CD & GitHub Actions",
+      "description": "Built automated pipelines with GitHub Actions, integrated testing, scanning, and deployment workflows.",
+      "status": "completed"
+    },
+    {
+      "date": "2026 Q3",
+      "title": "Kubernetes & Helm",
+      "description": "Deploying and managing workloads on K8s clusters, writing Helm charts, configuring ingress and service mesh.",
+      "status": "in-progress"
+    },
+    {
+      "date": "2026 Q4",
+      "title": "Terraform & IaC Mastery",
+      "description": "Deep dive into Terraform modules, state management, multi-cloud provisioning, and policy as code with OPA.",
+      "status": "planned"
+    },
+    {
+      "date": "2027 Q1",
+      "title": "AWS Solutions Architect Certification",
+      "description": "Prepare for and obtain the AWS SAA-C03 certification. Hands-on labs with VPC, Lambda, ECS, and CloudFormation.",
+      "status": "planned"
+    },
+    {
+      "date": "2027 Q2",
+      "title": "CKA — Certified Kubernetes Administrator",
+      "description": "Earn the CKA certification. Focus on cluster administration, troubleshooting, networking, and security.",
+      "status": "planned"
+    }
+  ]
+}

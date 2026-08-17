@@ -1,0 +1,127 @@
+backend:
+  name: github
+  repo: ShanukaGallage/portfolio_website
+  branch: main
+  base_url: https://shanukagallage.me
+  auth_endpoint: api/auth
+
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  - name: "projects"
+    label: "Projects & Roadmap"
+    files:
+      - file: "src/content/projects.json"
+        label: "Projects Data"
+        name: "projectsData"
+        fields:
+          - name: "projects"
+            label: "Projects"
+            widget: "list"
+            fields:
+              - { name: "hash", label: "Hash", widget: "string" }
+              - { name: "date", label: "Date", widget: "string" }
+              - { name: "title", label: "Title", widget: "string" }
+              - { name: "highlight", label: "Highlight", widget: "string" }
+              - { name: "role", label: "Role", widget: "string" }
+              - { name: "year", label: "Year", widget: "string" }
+              - { name: "description", label: "Description", widget: "text" }
+              - name: "stats"
+                label: "Stats"
+                widget: "list"
+                fields:
+                  - { name: "label", label: "Label", widget: "string" }
+                  - { name: "value", label: "Value", widget: "string" }
+              - { name: "highlights", label: "Highlights", widget: "list" }
+              - { name: "features", label: "Features", widget: "list", required: false }
+              - { name: "images", label: "Images", widget: "list" }
+              - { name: "tags", label: "Tags", widget: "list" }
+              - { name: "liveUrl", label: "Live URL", widget: "string", required: false }
+              - name: "githubRepo"
+                label: "GitHub Repo"
+                widget: "object"
+                required: false
+                fields:
+                  - { name: "owner", label: "Owner", widget: "string" }
+                  - { name: "name", label: "Name", widget: "string" }
+              - name: "status"
+                label: "Status"
+                widget: "select"
+                options: ["merged", "in-progress", "planned"]
+          - name: "roadmapItems"
+            label: "Roadmap Items"
+            widget: "list"
+            fields:
+              - { name: "date", label: "Date", widget: "string" }
+              - { name: "title", label: "Title", widget: "string" }
+              - { name: "description", label: "Description", widget: "text" }
+              - name: "status"
+                label: "Status"
+                widget: "select"
+                options: ["completed", "in-progress", "planned"]
+  - name: "experience"
+    label: "Experience"
+    files:
+      - file: "src/content/experience.json"
+        label: "Experience Data"
+        name: "experienceData"
+        fields:
+          - name: "professionalExperience"
+            label: "Professional Experience"
+            widget: "list"
+            fields:
+              - { name: "id", label: "ID", widget: "string" }
+              - { name: "role", label: "Role", widget: "string" }
+              - { name: "company", label: "Company", widget: "string" }
+              - { name: "type", label: "Type", widget: "string" }
+              - { name: "period", label: "Period", widget: "string" }
+              - { name: "location", label: "Location", widget: "string" }
+              - { name: "highlights", label: "Highlights", widget: "list" }
+          - name: "openSourcePrograms"
+            label: "Open Source Programs"
+            widget: "list"
+            fields:
+              - { name: "id", label: "ID", widget: "string" }
+              - { name: "acronym", label: "Acronym", widget: "string" }
+              - { name: "name", label: "Name", widget: "string" }
+              - { name: "year", label: "Year", widget: "string" }
+              - { name: "role", label: "Role", widget: "string" }
+          - name: "leadershipRoles"
+            label: "Leadership Roles"
+            widget: "list"
+            fields:
+              - { name: "id", label: "ID", widget: "string" }
+              - { name: "organization", label: "Organization", widget: "string" }
+              - name: "roles"
+                label: "Roles"
+                widget: "list"
+                fields:
+                  - { name: "title", label: "Title", widget: "string" }
+                  - { name: "period", label: "Period", widget: "string" }
+                  - { name: "highlights", label: "Highlights", widget: "list", required: false }
+          - name: "standaloneAffiliations"
+            label: "Standalone Affiliations"
+            widget: "list"
+            fields:
+              - { name: "id", label: "ID", widget: "string" }
+              - { name: "title", label: "Title", widget: "string" }
+  - name: "skills"
+    label: "Skills"
+    files:
+      - file: "src/content/skills.json"
+        label: "Skills Data"
+        name: "skillsData"
+        fields:
+          - name: "skillCategories"
+            label: "Skill Categories"
+            widget: "list"
+            fields:
+              - { name: "name", label: "Name", widget: "string" }
+              - { name: "icon", label: "Icon", widget: "string", required: false }
+              - name: "skills"
+                label: "Skills"
+                widget: "list"
+                fields:
+                  - { name: "name", label: "Name", widget: "string" }
+                  - { name: "iconPath", label: "Icon Path", widget: "string" }
