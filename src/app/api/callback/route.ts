@@ -56,17 +56,24 @@ export async function GET(request: Request) {
                 return;
               }
               
-              const message = 'authorization:github:success:{"token":"${token}","provider":"github"}';
-              
               try {
-                // Send to all possible origins just in case of mismatch
-                window.opener.postMessage(message, "https://shanukagallage.me");
-                window.opener.postMessage(message, "https://www.shanukagallage.me");
-                window.opener.postMessage(message, "http://localhost:3000");
-                window.opener.postMessage(message, "*");
+                // Decap CMS expects different strings depending on its version and config.
+                // We send ALL combinations to ensure one of them successfully matches its internal regex.
+                const messages = [
+                  'authorization:github:success:{"token":"${token}","provider":"github"}',
+                  'authorization:netlify:success:{"token":"${token}","provider":"github"}',
+                  'authorization:github:success:{"token":"${token}","provider":"netlify"}',
+                  'authorization:netlify:success:{"token":"${token}","provider":"netlify"}',
+                  'authorization:github:success:${token}',
+                  'authorization:netlify:success:${token}'
+                ];
                 
-                document.body.innerHTML += '<p style="color:green">Message sent to parent window. Closing in 2 seconds...</p>';
-                setTimeout(function() { window.close(); }, 2000);
+                messages.forEach(msg => {
+                  window.opener.postMessage(msg, "*");
+                });
+                
+                document.body.innerHTML += '<p style="color:green">Tokens dispatched to CMS. Closing window...</p>';
+                setTimeout(function() { window.close(); }, 1500);
               } catch (e) {
                 document.body.innerHTML += '<p style="color:red">Error sending postMessage: ' + e.message + '</p>';
               }
