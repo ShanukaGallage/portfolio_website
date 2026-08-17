@@ -123,3 +123,30 @@ collections:
                 fields:
                   - { name: "name", label: "Name", widget: "string" }
                   - { name: "iconPath", label: "Icon Path", widget: "string" }
+  - name: "profile"
+    label: "Profile (Home Page)"
+    files:
+      - file: "src/content/profile.json"
+        label: "Profile Data"
+        name: "profileData"
+        fields:
+          - { name: "name", label: "Name", widget: "string" }
+          - { name: "username", label: "Username", widget: "string" }
+          - { name: "title", label: "Title", widget: "string" }
+          - { name: "bio", label: "Bio", widget: "list", field: { name: "paragraph", label: "Paragraph", widget: "text" } }
+          - { name: "location", label: "Location", widget: "string" }
+          - { name: "email", label: "Email", widget: "string" }
+          - name: "socials"
+            label: "Socials"
+            widget: "object"
+            fields:
+              - { name: "github", label: "GitHub URL", widget: "string" }
+              - { name: "linkedin", label: "LinkedIn URL", widget: "string" }
+              - { name: "twitter", label: "Twitter URL", widget: "string", required: false }
+              - { name: "blog", label: "Blog URL", widget: "string", required: false }
+          - name: "stats"
+            label: "Stats"
+            widget: "list"
+            fields:
+              - { name: "label", label: "Label", widget: "string" }
+              - { name: "value", label: "Value", widget: "string" }
